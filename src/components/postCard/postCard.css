@@ -1,0 +1,14 @@
+.posts--wrapper {
+    display: flex;
+
+}
+
+.post--card {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+
+    margin: 40px;
+    padding: 40px;
+    border: 2px solid black;
+}
