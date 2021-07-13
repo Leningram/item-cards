@@ -3,7 +3,7 @@ const DELETE_POST = "DELETE_POST";
 
 const defaultState = localStorage.getItem("posts")
     ? JSON.parse(localStorage.getItem("posts"))
-    : [{ title: "asdasd", body: "asdasd", id: "asdas" }];
+    : [];
 
 export default function postsReducer(state = defaultState, action) {
     switch (action.type) {

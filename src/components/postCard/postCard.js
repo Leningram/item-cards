@@ -1,10 +1,18 @@
 import React from "react";
 import "./postCard.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deletePost } from "../../reducers/postsReducer";
+import { setPost } from "../../reducers/currentPostReducer";
 
 const PostCard = (props) => {
+    const posts = useSelector((state) => state.posts);
+
     const dispatch = useDispatch();
+
+    function setCurrentPost(id) {
+        const currentPost = posts.find((item) => item.id === id);
+        dispatch(setPost(currentPost));
+    }
 
     function onPostDelete(id) {
         dispatch(deletePost(id));
@@ -12,7 +20,7 @@ const PostCard = (props) => {
 
     return (
         <main className="posts--wrapper">
-            <div className="post--card">
+            <div className="post--card" onClick={() => setCurrentPost(props.id)}>
                 <h2 className="post--title">{props.title}</h2>
                 <article className="post--content">{props.body}</article>
                 <button onClick={() => onPostDelete(props.id)}>delete</button>
