@@ -10,10 +10,12 @@ const PostCard = (props) => {
 
     const dispatch = useDispatch();
 
-    function setCurrentPost(id) {
-        const currentPost = posts.find((item) => item.id === id);
-        dispatch(setPost(currentPost));
-        dispatch(showPost(true));
+    function setCurrentPost(e, id) {
+        if (e.target.tagName !== "BUTTON") {
+            const currentPost = posts.find((item) => item.id === id);
+            dispatch(setPost(currentPost));
+            dispatch(showPost(true));
+        }
     }
 
     function onPostDelete(id) {
@@ -22,7 +24,7 @@ const PostCard = (props) => {
 
     return (
         <main className="posts--wrapper">
-            <div className="post--card" onClick={() => setCurrentPost(props.id)}>
+            <div className="post--card" onClick={(e) => setCurrentPost(e, props.id)}>
                 <h2 className="post--title">{props.title}</h2>
                 <article className="post--content">{props.body}</article>
                 <button onClick={() => onPostDelete(props.id)}>delete</button>
