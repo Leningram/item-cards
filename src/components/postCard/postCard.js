@@ -18,13 +18,17 @@ const PostCard = (props) => {
         dispatch(deletePost(id));
     }
 
+    const comments = props.comments.map((comment) => {
+        return <li>{comment}</li>;
+    });
+
     return (
         <main className="posts--wrapper">
             <div className="post--card" onClick={(e) => showComments(e)}>
                 <h2 className="post--title">{props.title}</h2>
                 <article className="post--content">{props.body}</article>
                 <div className={commentsStatus ? "comments open" : "comments"}>
-                    Comments
+                    {comments}
                     <button onClick={() => setCommentsStatus(false)}>Убрать комменты</button>
                 </div>
                 <button onClick={() => onPostDelete(props.id)}>delete</button>

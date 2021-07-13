@@ -1,9 +1,7 @@
 const ADD_POST = "ADD_POST";
 const DELETE_POST = "DELETE_POST";
 
-const defaultState = localStorage.getItem("posts")
-    ? JSON.parse(localStorage.getItem("posts"))
-    : [];
+const defaultState = localStorage.getItem("posts") ? JSON.parse(localStorage.getItem("posts")) : [];
 
 export default function postsReducer(state = defaultState, action) {
     switch (action.type) {
@@ -34,7 +32,8 @@ export const addPost = (title, body) => ({
         const newPost = {
             id: generateId(),
             title,
-            body
+            body,
+            comments: ["test", "test"]
         };
         return newPost;
     })()
