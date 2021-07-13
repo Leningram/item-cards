@@ -3,6 +3,7 @@ import "./postCard.css";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePost } from "../../reducers/postsReducer";
 import { setPost } from "../../reducers/currentPostReducer";
+import { showPost } from "../../reducers/showPostReducer";
 
 const PostCard = (props) => {
     const posts = useSelector((state) => state.posts);
@@ -12,6 +13,7 @@ const PostCard = (props) => {
     function setCurrentPost(id) {
         const currentPost = posts.find((item) => item.id === id);
         dispatch(setPost(currentPost));
+        dispatch(showPost(true));
     }
 
     function onPostDelete(id) {
