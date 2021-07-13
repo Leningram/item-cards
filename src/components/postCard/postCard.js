@@ -1,21 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import "./postCard.css";
+import { useDispatch } from "react-redux";
+import { deletePost } from "../../reducers/postsReducer";
 
-export default class PostCard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
+const PostCard = (props) => {
+    const dispatch = useDispatch();
+
+    function onPostDelete(id) {
+        dispatch(deletePost(id));
     }
 
-    render() {
-        return (
-            <main className="posts--wrapper">
-                <div className="post--card">
-                    <h2 className="post--title">{this.props.title}</h2>
-                    <article className="post--content">{this.props.body}</article>
-                    <button onClick={() => this.props.onDelete(this.props.id)}>delete</button>
-                </div>
-            </main>
-        );
-    }
-}
+    return (
+        <main className="posts--wrapper">
+            <div className="post--card">
+                <h2 className="post--title">{props.title}</h2>
+                <article className="post--content">{props.body}</article>
+                <button onClick={() => onPostDelete(props.id)}>delete</button>
+            </div>
+        </main>
+    );
+};
+
+export default PostCard;
