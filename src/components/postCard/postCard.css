@@ -12,3 +12,24 @@
     padding: 40px;
     border: 2px solid black;
 }
+
+.comments {
+    display: flex;
+
+
+    justify-content: center;
+    align-items: center;
+
+
+    visibility: hidden;
+    opacity: 0;
+
+
+}
+
+.comments.open {
+    visibility: visible;
+    opacity: 1;
+
+
+}
