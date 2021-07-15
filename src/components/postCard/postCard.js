@@ -1,33 +1,47 @@
 import React, { useState } from "react";
 import "./postCard.css";
-import { useDispatch } from "react-redux";
+import Comment from "../comment/comment";
+import { useDispatch, useSelector } from "react-redux";
 import { editPost } from "../../reducers/postsReducer";
 import { deletePost } from "../../reducers/postsReducer";
+import { addComment } from "../../reducers/commentReducer";
 
 const PostCard = (props) => {
     const [title, setTitle] = useState(props.title);
     const [body, setBody] = useState(props.body);
     const [commentsStatus, setCommentsStatus] = useState(false);
+    const [commentText, setCommentText] = useState("");
     const [isEditable, setIsEditable] = useState(false);
     const id = props.id;
-    const commentsArray = props.comments;
     const dispatch = useDispatch();
 
-    function showComments(e, id) {
+    //получаем комменты из стейта и фильтруем по postID только те, которые относятся к данному посту
+    const getComments = useSelector((state) => state.comments).filter((e) => e.postID === id);
+    function showComments(e) {
         if (e.target.tagName !== "BUTTON" && e.target.tagName !== "INPUT") {
             setCommentsStatus(true);
         }
     }
 
-    function onEditPost(title, body, id, commentsArray) {
-        dispatch(editPost(title, body, id, commentsArray));
+    function onEditPost(title, body, id) {
+        dispatch(editPost(title, body, id));
     }
 
     function onPostDelete(id) {
         dispatch(deletePost(id));
     }
-    const comments = props.comments.map((comment, index) => {
-        return <li key={index}>{comment}</li>;
+
+    function onCommentAdd(e, postID, text) {
+        e.preventDefault();
+        //если коммент не пустой, добавляем его
+        if (text !== "") {
+            dispatch(addComment(postID, text));
+            setCommentText("");
+        }
+    }
+
+    const comments = getComments.map((comment, index) => {
+        return <Comment comment={comment.text} key={index} index={index} />;
     });
 
     return (
@@ -54,15 +68,17 @@ const PostCard = (props) => {
                             onChange={(e) => setBody(e.target.value)}
                         />
                     ) : (
-                        <h2>{body}</h2>
+                        <p>{body}</p>
                     )}
                 </div>
+
+                {/* показ/скрытие комментов */}
                 <div className={commentsStatus ? "comments open" : "comments"}>
-                    <form>
-                        <input type="text" />
+                    <form onSubmit={(e) => onCommentAdd(e, id, commentText)}>
+                        <input type="text" value={commentText} onChange={(e) => setCommentText(e.target.value)} />
                         <button>Добавить</button>
                     </form>
-                    {comments}
+                    <ul>{comments}</ul>
                     <button onClick={() => setCommentsStatus(false)}>Скрыть комменты</button>
                 </div>
                 <button onClick={() => onPostDelete(props.id)}>Delete</button>
@@ -73,7 +89,7 @@ const PostCard = (props) => {
                             setIsEditable(true);
                         } else {
                             //если редактирование включено, передаем данные в редюсер
-                            onEditPost(title, body, commentsArray, id);
+                            onEditPost(id, title, body);
                             setIsEditable(false); //  и выключаем редактирование
                         }
                     }}

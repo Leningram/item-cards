@@ -45,20 +45,18 @@ export const addPost = (title, body) => ({
         const newPost = {
             id: generateId(),
             title,
-            body,
-            comments: ["test", "test"]
+            body
         };
         return newPost;
     })()
 });
 
-export const editPost = (title, body, commentsArray, id) => ({
+export const editPost = (id, title, body) => ({
     type: EDIT_POST,
     payload: {
         id,
         title,
-        body,
-        comments: commentsArray
+        body
     }
 });
 
