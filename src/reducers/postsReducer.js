@@ -1,4 +1,5 @@
 const ADD_POST = "ADD_POST";
+const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 
 const defaultState = localStorage.getItem("posts") ? JSON.parse(localStorage.getItem("posts")) : [];
@@ -9,6 +10,18 @@ export default function postsReducer(state = defaultState, action) {
             const newState = [...state, action.payload];
             localStorage.setItem("posts", JSON.stringify(newState));
             return newState;
+
+        case EDIT_POST:
+            // const postToEdit = state.find((post) => post.id === action.payload.id);
+            const changedPosts = state.map((post) => {
+                if (post.id === action.payload.id) {
+                    return action.payload;
+                }
+                return post;
+            });
+            localStorage.setItem("posts", JSON.stringify(changedPosts));
+
+            return changedPosts;
 
         case DELETE_POST:
             const index = state.indexOf(state.find((post) => post.id === action.payload));
@@ -37,6 +50,16 @@ export const addPost = (title, body) => ({
         };
         return newPost;
     })()
+});
+
+export const editPost = (title, body, commentsArray, id) => ({
+    type: EDIT_POST,
+    payload: {
+        id,
+        title,
+        body,
+        comments: commentsArray
+    }
 });
 
 export const deletePost = (id) => ({
