@@ -41,51 +41,51 @@ const PostCard = (props) => {
     }
 
     const comments = getComments.map((comment, index) => {
-        return <Comment comment={comment} key={index} index={index} />;
+        return <Comment comment={comment} key={comment.id} index={index} />;
     });
 
     return (
-        <main className="posts--wrapper">
-            <div className="post--card" onClick={(e) => showComments(e)}>
-                <div className="post--card__content">
-                    {isEditable ? (
-                        <input
-                            type="text"
-                            value={title}
-                            className="post--card__title"
-                            disabled={!isEditable}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                    ) : (
-                        <h2>{title}</h2>
-                    )}
-                    {isEditable ? (
-                        <input
-                            type="text"
-                            value={body}
-                            className="post--card__body"
-                            disabled={!isEditable}
-                            onChange={(e) => setBody(e.target.value)}
-                        />
-                    ) : (
-                        <p>{body}</p>
-                    )}
-                </div>
+        <div className="post--card" onClick={(e) => showComments(e)}>
+            <div className="post--card__content">
+                {isEditable ? (
+                    <input
+                        type="text"
+                        value={title}
+                        className="post--card__title"
+                        disabled={!isEditable}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                ) : (
+                    <h2>{title}</h2>
+                )}
+                {isEditable ? (
+                    <input
+                        type="text"
+                        value={body}
+                        className="post--card__body"
+                        disabled={!isEditable}
+                        onChange={(e) => setBody(e.target.value)}
+                    />
+                ) : (
+                    <p>{body}</p>
+                )}
+            </div>
 
-                {/* показ/скрытие комментов */}
-                <div className={commentsStatus ? "comments open" : "comments"}>
-                    <form onSubmit={(e) => onCommentAdd(e, id, commentText)}>
-                        <input
-                            type="text"
-                            autoFocus={true}
-                            value={commentText}
-                            onChange={(e) => setCommentText(e.target.value)}
-                        />
-                        <button>Добавить</button>
-                    </form>
-                    <ul>{comments}</ul>
-                    <button onClick={() => setCommentsStatus(false)}>Скрыть комменты</button>
-                </div>
+            {/* показ/скрытие комментов */}
+            <div className={commentsStatus ? "post--card__comments open" : "post--card__comments"}>
+                <form onSubmit={(e) => onCommentAdd(e, id, commentText)}>
+                    <input
+                        type="text"
+                        autoFocus={true}
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                    />
+                    <button>Добавить</button>
+                </form>
+                <ul>{comments}</ul>
+                <button onClick={() => setCommentsStatus(false)}>Скрыть комменты</button>
+            </div>
+            <div className="post--card__comments__buttons">
                 <button onClick={() => onPostDelete(props.id)}>Удалить</button>
                 <button
                     onClick={() => {
@@ -103,7 +103,7 @@ const PostCard = (props) => {
                     {isEditable ? "Сохранить" : "Редактировать"}
                 </button>
             </div>
-        </main>
+        </div>
     );
 };
 

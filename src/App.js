@@ -13,7 +13,7 @@ const App = () => {
     return (
         <>
             <PostAdd />
-            {cards}
+            <main className="posts--wrapper">{cards}</main>
         </>
     );
 };

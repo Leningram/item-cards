@@ -1,16 +1,22 @@
-.posts--wrapper {
-    display: flex;
-
+h2 {
+    font-weight: 700;
+    color: rgb(86, 86, 104)
 }
 
 .post--card {
-    display: flex;
+    /* display: inline;
     flex-direction: column;
     width: 300px;
     margin: 40px;
     padding: 40px;
     border: 2px solid black;
-    cursor: pointer;
+    cursor: pointer; */
+    width: 40vw;
+    display: inline-block;
+    margin: 20px 30px;
+    padding: 30px;
+    border: 1px solid rgb(163, 163, 163);
+    border-radius: 7px;
 }
 
 .post--card__content {
@@ -33,7 +39,7 @@
     outline: none;
 }
 
-.comments {
+.post--card__comments {
     display: none;
     flex-direction: column;
     gap: 10px;
@@ -42,6 +48,22 @@
     align-items: center;
 }
 
-.comments.open {
+.post--card__comments.open {
+    display: flex;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+li {
     display: flex;
 }

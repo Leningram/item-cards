@@ -16,7 +16,7 @@ const Comment = (props) => {
         dispatch(deleteComment(commentID));
     }
     return (
-        <li className="post-card__comment" key={props.index}>
+        <li className="post-card__comment">
             {isEdited ? <input type="text" value={text} onChange={(e) => setText(e.target.value)} /> : <p>{text}</p>}
             {isEdited ? (
                 <button onClick={() => onEditComment(props.comment.id, text)}>Сохранить</button>
