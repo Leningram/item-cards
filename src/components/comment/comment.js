@@ -17,7 +17,7 @@ const Comment = (props) => {
     }
     return (
         <li className="post-card__comment">
-            {isEdited ? <input type="text" value={text} onChange={(e) => setText(e.target.value)} /> : <p>{text}</p>}
+            {isEdited ? <textarea type="text" value={text} onChange={(e) => setText(e.target.value)} /> : <p>{text}</p>}
             {isEdited ? (
                 <button onClick={() => onEditComment(props.comment.id, text)}>Сохранить</button>
             ) : (
