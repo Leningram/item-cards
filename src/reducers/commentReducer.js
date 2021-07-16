@@ -12,6 +12,9 @@ export default function commentReducer(state = defaultState, action) {
             return commentAdded;
 
         case EDIT_COMMENT:
+            const commentIndex = state.findIndex((comment) => comment.id === action.payload.commentID);
+            state[commentIndex].text = action.payload.commentText;
+            localStorage.setItem("comments", JSON.stringify(state));
             return state;
 
         case DELETE_COMMENT:
@@ -40,6 +43,11 @@ export const addComment = (postID, text) => ({
         };
         return newComment;
     })()
+});
+
+export const editComment = (commentID, commentText) => ({
+    type: EDIT_COMMENT,
+    payload: { commentID, commentText }
 });
 
 export const deleteComment = (commentID) => ({

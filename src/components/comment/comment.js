@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteComment } from "../../reducers/commentReducer";
+import { deleteComment, editComment } from "../../reducers/commentReducer";
 
 const Comment = (props) => {
+    const [isEdited, setIsEdited] = useState(false);
+    const [text, setText] = useState(props.comment.text);
     const dispatch = useDispatch();
+
+    function onEditComment(commentID, commentText) {
+        dispatch(editComment(commentID, commentText));
+        setIsEdited(false);
+    }
 
     function onDeleteComment(commentID) {
         dispatch(deleteComment(commentID));
     }
     return (
         <li className="post-card__comment" key={props.index}>
-            {props.comment.text}
-            <button>Редактировать</button>
+            {isEdited ? <input type="text" value={text} onChange={(e) => setText(e.target.value)} /> : <p>{text}</p>}
+            {isEdited ? (
+                <button onClick={() => onEditComment(props.comment.id, text)}>Сохранить</button>
+            ) : (
+                <button onClick={() => setIsEdited(true)}>Редактировать</button>
+            )}
             <button onClick={() => onDeleteComment(props.comment.id)}>Удалить</button>
         </li>
     );
