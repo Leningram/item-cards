@@ -41,7 +41,7 @@ const PostCard = (props) => {
     }
 
     const comments = getComments.map((comment, index) => {
-        return <Comment comment={comment.text} key={index} index={index} />;
+        return <Comment comment={comment} key={index} index={index} />;
     });
 
     return (
@@ -75,13 +75,18 @@ const PostCard = (props) => {
                 {/* показ/скрытие комментов */}
                 <div className={commentsStatus ? "comments open" : "comments"}>
                     <form onSubmit={(e) => onCommentAdd(e, id, commentText)}>
-                        <input type="text" value={commentText} onChange={(e) => setCommentText(e.target.value)} />
+                        <input
+                            type="text"
+                            autoFocus={true}
+                            value={commentText}
+                            onChange={(e) => setCommentText(e.target.value)}
+                        />
                         <button>Добавить</button>
                     </form>
                     <ul>{comments}</ul>
                     <button onClick={() => setCommentsStatus(false)}>Скрыть комменты</button>
                 </div>
-                <button onClick={() => onPostDelete(props.id)}>Delete</button>
+                <button onClick={() => onPostDelete(props.id)}>Удалить</button>
                 <button
                     onClick={() => {
                         if (!isEditable) {
@@ -95,7 +100,7 @@ const PostCard = (props) => {
                     }}
                 >
                     {/* Имя кнопки в зависимости от статуса редактирования */}
-                    {isEditable ? "Save" : "Edit"}
+                    {isEditable ? "Сохранить" : "Редактировать"}
                 </button>
             </div>
         </main>

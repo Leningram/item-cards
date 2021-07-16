@@ -7,15 +7,17 @@ const defaultState = localStorage.getItem("comments") ? JSON.parse(localStorage.
 export default function commentReducer(state = defaultState, action) {
     switch (action.type) {
         case ADD_COMMENT:
-            const newState = [...state, action.payload];
-            localStorage.setItem("comments", JSON.stringify(newState));
-            return newState;
+            const commentAdded = [...state, action.payload];
+            localStorage.setItem("comments", JSON.stringify(commentAdded));
+            return commentAdded;
 
         case EDIT_COMMENT:
             return state;
 
         case DELETE_COMMENT:
-            return state;
+            const commentDeleted = state.filter((comment) => comment.id !== action.payload);
+            localStorage.setItem("comments", JSON.stringify(commentDeleted));
+            return commentDeleted;
 
         default:
             return state;
@@ -38,4 +40,9 @@ export const addComment = (postID, text) => ({
         };
         return newComment;
     })()
+});
+
+export const deleteComment = (commentID) => ({
+    type: DELETE_COMMENT,
+    payload: commentID
 });
